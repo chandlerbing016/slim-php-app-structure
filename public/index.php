@@ -1,11 +1,5 @@
 <?php
 
-/**
- *  my-short-post prototype, version - 1.0
- *
- *  my-short-post is an internet service that allows users to create short posts
- *  others can read, like, comment on those posts
- */
 
 require __DIR__ . '/../vendor/autoload.php';
 
