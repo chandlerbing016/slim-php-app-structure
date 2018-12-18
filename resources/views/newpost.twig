@@ -1,0 +1,15 @@
+{% extends 'template/default.twig' %}
+
+{% block content %}
+
+    <h4>Create new post</h4>
+    <div>
+        <form action="#" method="POST" style="display:flex;flex-direction:column;max-width:50%;margin:30px;
+        ">
+            <input type="text" name="title" id="title" requied="requied">
+            <textarea name="content" id="content" cols="30" rows="10"></textarea>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+{% endblock %}

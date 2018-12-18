@@ -1,0 +1,22 @@
+<a href="{{ path_for('home') }}">HelloWorld Inc</a>
+
+{% if lgd_user.displayname is defined %}
+    <p>Hello,
+        {{ lgd_user.displayname }}</p>
+    <ul>
+        <li>
+            <a href="#">add post</a>
+        </li>
+        <li>
+            <a href="{{ path_for('u.posts') }}">my posts</a>
+        </li>
+        <li>
+            <a href="{{ path_for('u.settings') }}">settings</a>
+        </li>
+        <li>
+            <a href="{{ path_for('u.logout') }}">logout</a>
+        </li>
+    </ul>
+{% else %}
+    <a href="{{ path_for('g.login') }}">login</a>
+{% endif %}

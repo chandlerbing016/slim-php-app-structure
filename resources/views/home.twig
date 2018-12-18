@@ -2,6 +2,23 @@
 
 {% block content %}
 
-    <h4>this is homepage</h4>
+    <h4>Homepage</h4>
+
+    <p>Recent posts</p>
+
+    <p>
+        {% if recent_posts is not empty %}
+            {% for post in recent_posts %}
+                <div style="padding:5px;background:rgb(180,180,180);margin:10px auto;">
+                    <p>
+                        <b>{{ post.post.title }}</b>
+                        <small>, by
+                            {{ post.displayname }}</small>
+                    </p>
+                    <p>{{ post.post.content }}</p>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </p>
 
 {% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'template/default.twig' %}
+
+{% block content %}
+
+    <h4>Edit your post</h4>
+    <div>
+        <form action="#" method="POST" style="display:flex;flex-direction:column;max-width:50%;margin:30px;
+        ">
+            <input type="text" name="title" id="title" value="{{ post.title }}" requied="requied">
+            <input type="hidden" name="post-id" value="{{ post.id }}">
+            <textarea name="content" id="content" cols="30" rows="10">{{ post.content }}</textarea>
+            <input type="submit" value="Save changes">
+        </form>
+    </div>
+
+{% endblock %}

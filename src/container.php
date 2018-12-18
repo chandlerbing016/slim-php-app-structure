@@ -1,6 +1,5 @@
 <?php
 
-# cost on every request
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Cache\FilesystemCache;
 use Doctrine\ORM\EntityManager;
@@ -24,26 +23,33 @@ $container[EntityManager::class] = function ($container): EntityManager {
             $container['settings']['doctrine']['cache_dir']
         )
     );
-    return EntityManager::create(
+    $EntityManager =  EntityManager::create(
         $container['settings']['doctrine']['connection'],
         $config
     );
+    $EntityManager->getConnection()->getConfiguration()->setSQLLogger(null);
+    return $EntityManager;
 };
 
 # twig view
 $container['view'] = function ($container) {
     $view = new \Slim\Views\Twig(KIRK_BASE_ROOT . 'resources/views', [
+        'debug' => true,
         'cache' => false,
     ]);
-
-    // Instantiate and add Slim specific extension
     $router = $container->get('router');
     $uri = \Slim\Http\Uri::createFromEnvironment(new \Slim\Http\Environment($_SERVER));
     $view->addExtension(new Slim\Views\TwigExtension($router, $uri));
-
+    $view->addExtension(new \Twig_Extension_Debug());
     return $view;
 };
 
-$container['HomeController'] = function ($container) {
-    return new \Kirk\Controllers\HomeController($container);
+# repositories
+$container['UserRepository'] = function ($container) {
+    return new \Kirk\Repositories\UserRepository($container[EntityManager::class]);
 };
+
+$container['PostRepository'] = function ($container) {
+    return new \Kirk\Repositories\PostRepository($container[EntityManager::class]);
+};
+

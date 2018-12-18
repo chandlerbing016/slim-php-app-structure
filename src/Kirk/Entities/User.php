@@ -2,7 +2,9 @@
 
 namespace Kirk\Entities;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Kirk\Entities\Post;
 
 /**
  * @ORM\Entity
@@ -18,15 +20,14 @@ class User
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=200)
+     * @ORM\Column(type="string", length=64)
      */
+    protected $displayname;
 
-    protected $title;
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string", length=224)
      */
-
-    protected $content;
+    protected $email;
 
     /**
      * @ORM\Column(type="datetime")
@@ -34,20 +35,63 @@ class User
     protected $data_joined;
 
     /**
-     * Constructor
+     * One User can have many posts. This is the inverse side.
+     * @ORM\OneToMany(targetEntity="Post", mappedBy="user")
      */
+    protected $posts;
+
     public function __construct()
     {
-        $this->date_added = new \DateTime();
+        $this->posts = new ArrayCollection();
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
     public function getId()
     {
         return $this->id;
+    }
+
+    public function setDisplayname(string $displayname)
+    {
+        $this->displayname = $displayname;
+    }
+
+    public function getDisplayName()
+    {
+        return $this->displayname;
+    }
+
+    public function setEmail(string $email)
+    {
+        $this->email = $email;
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function setPost(Post $post)
+    {
+        if ($this->posts->contains($post)) {
+            return;
+        }
+
+        $this->posts->add($post);
+        $post->setUser($this);
+    }
+
+    public function getPosts()
+    {
+        return $this->posts;
+    }
+
+    public function setJoiningDate()
+    {
+        $this->data_joined = new \DateTime();
+    }
+
+    public function getJoiningDate()
+    {
+        return $this->data_joined;
     }
 }

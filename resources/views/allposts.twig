@@ -1,0 +1,21 @@
+{% extends 'template/default.twig' %}
+
+{% block content %}
+
+    <h4>All of your posts</h4>
+
+    <div>
+        {% for post in posts %}
+            <div style="padding:4px;margin:20px auto; background:rgb(206, 206, 206);">
+                <p>
+                    <b><a href="#">{{ post.title }}</a></b>
+                </p>
+                <p>{{ post.content }}</p>
+                <p><small>Create at: {{ post.date_added }}</small></p>
+                <p><small>Updated at: {{ post.date_updated }}</small></p>
+                <p><small>tags: {{ post.all_tags }}</small></p>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
